@@ -41,6 +41,6 @@ Contact.prototype.fullName = function() {
   return this.firstName + " " + this.lastName;
 };
 
-Contact.prototype.update = function() {
-
+Contact.prototype.update = function(key, value) {
+  return this[key] = value;
 }
