@@ -31,11 +31,12 @@ AddressBook.prototype.deleteContact = function(id) {
 };
 
 // Business Logic for Contacts -------------
-function Contact(firstName, lastName, phoneNumber, email) {
+function Contact(firstName, lastName, phoneNumber, email, physicalAddress) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
   this.email = email;
+  this.physicalAddress = physicalAddress;
 }
 
 Contact.prototype.fullName = function() {
@@ -71,6 +72,7 @@ function displayContactDetails(event) {
   document.querySelector(".email").innerText = contact.email;
   document.querySelector("button.delete").setAttribute("id", contact.id);
   document.querySelector("div#contact-details").removeAttribute("class");
+  document.querySelector(".physical-address").innerText = contact.physicalAddress;
 }
 
 function handleDelete(event) {
@@ -86,13 +88,15 @@ function handleFormSubmission(event) {
   const inputtedLastName = document.querySelector("input#new-last-name").value;
   const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
   const inputtedEmail = document.querySelector("input#new-email").value;
-  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail);
+  const inputtedPhysicalAddress = document.querySelector("input#new-physical-address").value;
+  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedPhysicalAddress);
   addressBook.addContact(newContact);
   listContacts(addressBook);
   document.querySelector("input#new-first-name").value = null;
   document.querySelector("input#new-last-name").value = null;
   document.querySelector("input#new-phone-number").value = null;
   document.querySelector("input#new-email").value = null;
+  document.querySelector("input#new-physical-address").value = null;
 }
 
 window.addEventListener("load", function () {
