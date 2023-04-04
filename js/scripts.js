@@ -36,7 +36,7 @@ function Contact(firstName, lastName, phoneNumber, work, email, personal) {
   this.lastName = lastName;
   this.phoneNumber = phoneNumber;
   this.address = new Address(work, email, personal);
-  
+
 }
 function Address (work, email, personal) {
   this.work = work;
@@ -74,10 +74,12 @@ function displayContactDetails(event) {
   document.querySelector(".first-name").innerText = contact.firstName;
   document.querySelector(".last-name").innerText = contact.lastName;
   document.querySelector(".phone-number").innerText = contact.phoneNumber;
-  document.querySelector(".email").innerText = contact.email;
+  document.querySelector(".email").innerText = contact.address.email;
+  document.querySelector(".physical-address").innerText = contact.address.personal;
+  document.querySelector(".work-address").innerText = contact.address.work;
   document.querySelector("button.delete").setAttribute("id", contact.id);
   document.querySelector("div#contact-details").removeAttribute("class");
-  document.querySelector(".physical-address").innerText = contact.physicalAddress;
+  
 }
 
 function handleDelete(event) {
@@ -94,7 +96,8 @@ function handleFormSubmission(event) {
   const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
   const inputtedEmail = document.querySelector("input#new-email").value;
   const inputtedPhysicalAddress = document.querySelector("input#new-physical-address").value;
-  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedEmail, inputtedPhysicalAddress);
+  const inputtedWorkAddress = document.querySelector("input#new-work-address").value;
+  let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber, inputtedWorkAddress, inputtedEmail, inputtedPhysicalAddress);
   addressBook.addContact(newContact);
   listContacts(addressBook);
   document.querySelector("input#new-first-name").value = null;
@@ -102,6 +105,7 @@ function handleFormSubmission(event) {
   document.querySelector("input#new-phone-number").value = null;
   document.querySelector("input#new-email").value = null;
   document.querySelector("input#new-physical-address").value = null;
+  document.querySelector("input#new-work-address").value = null;
 }
 
 window.addEventListener("load", function () {
