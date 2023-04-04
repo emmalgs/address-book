@@ -49,7 +49,30 @@ Contact.prototype.update = function(key, value) {
 let addressBook = new AddressBook();
 
 function listContacts(addressBookToDisplay) {
-  
+  let contactsDiv = document.querySelector("div#contacts");
+  contactsDiv.innerText = null;
+  const ul = document.createElement("ul");
+  Object.keys(addressBookToDisplay.contacts).forEach(function(key) {
+    const contact = addressBookToDisplay.findContact(key);
+    const li = document.createElement("li");
+    li.append(contact.fullName());
+    li.setAttribute("id", contact.id);
+    ul.append(li);
+  });
+  contactsDiv.append(ul);
+}
+
+function displayContactDetails(event) { 
+  const contact = addressBook.findContact(event.target.id);
+  document.querySelector("#first-name").innerText = contact.firstName;
+  document.querySelector("#last-name").innerText = contact.lastName;
+  document.querySelector("#phone-number").innerText = contact.phoneNumber;
+  document.querySelector("button.delete").setAttribute("id", contact.id);
+  document.querySelector("div#contact-details").removeAttribute("class");
+}
+
+function handleDelete(event) {
+
 }
 
 function handleFormSubmission(event) {
@@ -59,9 +82,10 @@ function handleFormSubmission(event) {
   const inputtedPhoneNumber = document.querySelector("input#new-phone-number").value;
   let newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
   addressBook.addContact(newContact);
-  console.log(addressBook.contacts);
+  listContacts(addressBook);
 }
 
 window.addEventListener("load", function () {
   document.querySelector("form#new-contact").addEventListener("submit", handleFormSubmission);
+  document.querySelector("div#contacts").addEventListener("click", displayContactDetails);
 });
